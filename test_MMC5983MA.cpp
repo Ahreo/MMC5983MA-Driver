@@ -19,6 +19,7 @@ int main()
         printf("2.  Test MMC5983MA readMagData\n");
         printf("3.  Test MMC5983MA readStatusRegister\n");
         printf("4.  Test MMC5983MA readTemp\n");
+        printf("5.  Test set/reset\n");
         printf("9.  Exit Test Suite\n");
 
         // scanf("%d", &test);
@@ -40,13 +41,21 @@ int main()
         {
             case 1: // Test mag init
             {
-                bool init_success = mag.init();
-                printf(init_success ? "Init Success!\n" : "Init Failed!\n");
+                for(int i = 0; i < 100; i++)
+                {
+                    bool init_success = mag.init();
+                    printf(init_success ? "Init Success!\n" : "Init Failed!\n");
+                    wait_us(10000);
+                }
                 break;
             }
             case 2:
             {
-                mag.readMagData();
+                for(int i = 0; i < 10; i++)
+                {
+                    mag.readMagData();
+                    wait_us(100000);
+                }
                 break;
             }
             case 3:
@@ -61,6 +70,7 @@ int main()
             }
             case 5:
             {
+                mag.SET_RESET();
                 break;
             }
             case 9: // Exit test suite

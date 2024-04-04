@@ -30,9 +30,9 @@ struct mag_data_16
  */
 struct mag_data_18
 {
-    int32_t x;
-    int32_t y;
-    int32_t z;
+    float x;
+    float y;
+    float z;
 };
 
 class MMC5983MA_Base
@@ -81,13 +81,13 @@ class MMC5983MA_Base
          *                  This bit will be automatically reset to 0 after the shadow registers for OTP are refreshed.
          */
 
-        const uint8_t MASK_TM_M                = 0b0000'0001;
-        const uint8_t MASK_TM_T                = 0b0000'0010;
-        const uint8_t MASK_INT_meas_done_en    = 0b0000'0100;
-        const uint8_t MASK_Set                 = 0b0000'1000;
-        const uint8_t MASK_Reset               = 0b0001'0000;
-        const uint8_t MASK_Auto_SR_en          = 0b0010'0000;
-        const uint8_t MASK_OTP_Read            = 0b0100'0000;
+        const uint8_t MASK_TM_M                = 0b0000'0001; // 0b00000000; 0x0
+        const uint8_t MASK_TM_T                = 0b0000'0010; // 0x2
+        const uint8_t MASK_INT_meas_done_en    = 0b0000'0100; // 0x4
+        const uint8_t MASK_Set                 = 0b0000'1000; // 0x8
+        const uint8_t MASK_Reset               = 0b0001'0000; // 0x10
+        const uint8_t MASK_Auto_SR_en          = 0b0010'0000; // 0x20
+        const uint8_t MASK_OTP_Read            = 0b0100'0000; // 1 << 7;
 
     public:
         /**
@@ -205,6 +205,12 @@ class MMC5983MA_SPI : public MMC5983MA_Base
          * 
          */
         void readInternalControl_0SPI();
+
+        /**
+         * @brief MMC5983 integrated SET/RESET function to restore/set the 
+         * sensor characteristics
+         */
+        void SET_RESET();
 
     protected:
         /**
